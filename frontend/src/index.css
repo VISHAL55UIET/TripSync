@@ -1,0 +1,38 @@
+@import "tailwindcss";
+
+@layer base {
+  body {
+    @apply bg-slate-950 text-slate-100 antialiased selection:bg-indigo-500/30 selection:text-indigo-200;
+  }
+
+  button:not(:disabled),
+  [role="button"]:not([aria-disabled="true"]),
+  select:not(:disabled) {
+    cursor: pointer;
+  }
+
+  /* Native date/time inputs ko dark mode me clean dikhane ke liye */
+  input[type="date"],
+  input[type="time"] {
+    color-scheme: dark;
+  }
+}
+
+/* Dark Mode Sleek Scrollbar */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+::-webkit-scrollbar-track {
+  background: #020617;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #1e293b;
+  border-radius: 9999px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: #334155;
+}
