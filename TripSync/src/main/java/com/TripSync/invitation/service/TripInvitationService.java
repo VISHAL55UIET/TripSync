@@ -60,8 +60,9 @@ public class TripInvitationService {
         if (request.role()== TripMemberRole.OWNER){
             throw new ResponseStatusException(HttpStatus.BAD_REQUEST,"OWNER role cannot be assigned through an invitation");
         }
-        User exstingUser = userRepository.findByEmail(inviteeEmail)
+        User exstingUser = userRepository.findByEmailIgnoreCase(inviteeEmail)
                 .orElse(null);
+
         if (exstingUser!=null&&tripMemberRepository.existsByTrip_IdAndUser_Id(tripId,exstingUser.getId())){
             throw new ResponseStatusException(HttpStatus.CONFLICT,"User is already a member of this trip");
         }

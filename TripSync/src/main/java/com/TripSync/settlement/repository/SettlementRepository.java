@@ -11,4 +11,5 @@ public interface SettlementRepository extends JpaRepository<Settlement,Long> {
     List<Settlement> findByTripIdOrderBySettleAtDesc(Long tripId);
     List<Settlement> findByTripIdAndPayerId(Long tripId,Long payerId);
     List<Settlement> findByTripIdAndPayeeId(Long tripId,Long payeeId);
+    boolean existsByRazorpayPaymentId(String razorpayPaymentId);
 }

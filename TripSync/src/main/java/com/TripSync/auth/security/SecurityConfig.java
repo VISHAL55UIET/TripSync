@@ -1,6 +1,5 @@
 package com.TripSync.auth.security;
 
-
 import com.TripSync.auth.service.CustomUserDetailService;
 import lombok.RequiredArgsConstructor;
 import org.springframework.context.annotation.Bean;
@@ -21,31 +20,31 @@ public class SecurityConfig {
     private final CustomUserDetailService customUserDetailService;
 
     @Bean
-    public PasswordEncoder passwordEncoder(){
+    public PasswordEncoder passwordEncoder() {
         return new BCryptPasswordEncoder();
     }
 
     @Bean
-    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception{
+    public AuthenticationManager authenticationManager(AuthenticationConfiguration configuration) throws Exception {
         return configuration.getAuthenticationManager();
     }
 
     @Bean
-    public SecurityFilterChain securityFilterChain(HttpSecurity http)throws Exception{
+    public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         http
                 .csrf(csrf -> csrf.disable())
                 .sessionManagement(session -> session
                         .sessionCreationPolicy(SessionCreationPolicy.STATELESS))
                 .userDetailsService(customUserDetailService)
                 .authorizeHttpRequests(auth -> auth
-
                         .requestMatchers(
                                 "/auth/**",
+                                "/uploads/**",
+                                "/ws/**",
                                 "/error",
                                 "/v3/api-docs/**",
                                 "/swagger-ui/**",
                                 "/swagger-ui.html",
-//                        actuator endpoints
                                 "/actuator/health",
                                 "/actuator/health/**",
                                 "/actuator/prometheus"
@@ -55,10 +54,7 @@ public class SecurityConfig {
                                 "/actuator/metrics",
                                 "/actuator/metrics/**"
                         ).hasRole("ADMIN")
-
                         .anyRequest().authenticated())
-
-
                 .addFilterBefore(
                         jwtAuthenticationFilter, UsernamePasswordAuthenticationFilter.class
                 );
